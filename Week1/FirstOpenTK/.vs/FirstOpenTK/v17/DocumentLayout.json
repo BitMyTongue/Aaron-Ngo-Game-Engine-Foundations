@@ -1,0 +1,53 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Users\\Aaron Post SSD\\Desktop\\Sem 5.5\\Game Engine Foundations GAM531NSA\\Week1\\FirstOpenTK\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{1AE8A088-7C3E-4E92-A2F3-F1B927BDBB0A}|FirstOpenTK.csproj|d:\\users\\aaron post ssd\\desktop\\sem 5.5\\game engine foundations gam531nsa\\week1\\firstopentk\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1AE8A088-7C3E-4E92-A2F3-F1B927BDBB0A}|FirstOpenTK.csproj|solutionrelative:game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1AE8A088-7C3E-4E92-A2F3-F1B927BDBB0A}|FirstOpenTK.csproj|d:\\users\\aaron post ssd\\desktop\\sem 5.5\\game engine foundations gam531nsa\\week1\\firstopentk\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1AE8A088-7C3E-4E92-A2F3-F1B927BDBB0A}|FirstOpenTK.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Game.cs",
+              "DocumentMoniker": "D:\\Users\\Aaron Post SSD\\Desktop\\Sem 5.5\\Game Engine Foundations GAM531NSA\\Week1\\FirstOpenTK\\Game.cs",
+              "RelativeDocumentMoniker": "Game.cs",
+              "ToolTip": "D:\\Users\\Aaron Post SSD\\Desktop\\Sem 5.5\\Game Engine Foundations GAM531NSA\\Week1\\FirstOpenTK\\Game.cs",
+              "RelativeToolTip": "Game.cs",
+              "ViewState": "AgIAACIAAAAAAAAAAAAjwEIAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-05T15:18:03.451Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Users\\Aaron Post SSD\\Desktop\\Sem 5.5\\Game Engine Foundations GAM531NSA\\Week1\\FirstOpenTK\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "D:\\Users\\Aaron Post SSD\\Desktop\\Sem 5.5\\Game Engine Foundations GAM531NSA\\Week1\\FirstOpenTK\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-05T15:14:33.15Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
