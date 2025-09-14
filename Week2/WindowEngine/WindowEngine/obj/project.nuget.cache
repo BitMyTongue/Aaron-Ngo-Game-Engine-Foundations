@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "dgSpecHash": "U/+O6Z3UHmA=",
+  "success": true,
+  "projectFilePath": "D:\\Users\\Aaron Post SSD\\Desktop\\Sem 5.5\\Game Engine Foundations GAM531NSA\\Week2\\WindowEngine\\WindowEngine\\WindowEngine.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\aaron\\.nuget\\packages\\opentk\\4.9.4\\opentk.4.9.4.nupkg.sha512",
+    "C:\\Users\\aaron\\.nuget\\packages\\opentk.audio.openal\\4.9.4\\opentk.audio.openal.4.9.4.nupkg.sha512",
+    "C:\\Users\\aaron\\.nuget\\packages\\opentk.compute\\4.9.4\\opentk.compute.4.9.4.nupkg.sha512",
+    "C:\\Users\\aaron\\.nuget\\packages\\opentk.core\\4.9.4\\opentk.core.4.9.4.nupkg.sha512",
+    "C:\\Users\\aaron\\.nuget\\packages\\opentk.graphics\\4.9.4\\opentk.graphics.4.9.4.nupkg.sha512",
+    "C:\\Users\\aaron\\.nuget\\packages\\opentk.input\\4.9.4\\opentk.input.4.9.4.nupkg.sha512",
+    "C:\\Users\\aaron\\.nuget\\packages\\opentk.mathematics\\4.9.4\\opentk.mathematics.4.9.4.nupkg.sha512",
+    "C:\\Users\\aaron\\.nuget\\packages\\opentk.redist.glfw\\3.4.0.44\\opentk.redist.glfw.3.4.0.44.nupkg.sha512",
+    "C:\\Users\\aaron\\.nuget\\packages\\opentk.windowing.common\\4.9.4\\opentk.windowing.common.4.9.4.nupkg.sha512",
+    "C:\\Users\\aaron\\.nuget\\packages\\opentk.windowing.desktop\\4.9.4\\opentk.windowing.desktop.4.9.4.nupkg.sha512",
+    "C:\\Users\\aaron\\.nuget\\packages\\opentk.windowing.graphicslibraryframework\\4.9.4\\opentk.windowing.graphicslibraryframework.4.9.4.nupkg.sha512",
+    "C:\\Users\\aaron\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
