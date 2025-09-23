@@ -6,3 +6,5 @@ This repo contains all my course work for **Game Engine Foundations**.
 Assignments can be found in each week's respective folder.
 
 Week 1 - First Assignemnt: FirstOpenTK 2D rectangle
+Week 2 - Vector and Matrix Operations
+Week 3 - Cube Render
