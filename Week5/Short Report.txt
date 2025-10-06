@@ -1,12 +1,3 @@
-# Fifth Assignment - Implement Phong Lighting in a Shader Using OpenTK
-
-## Libraries Used
-- OpenTK.Mathematics for vector and matrix operations
-- OpenTK.Graphics for rendering with OpenGL
-- System.Drawing.Common for loading img texture
-
-## Addition from Assignment 4:
-
 For this assignment, I added phong lighting to the minecraft dirt block I had 
 from assignment 4 to simulate shading. I updated the vertex data to include 
 normals, along with the positions and texture coordinates I already had. Then 
@@ -22,10 +13,3 @@ position accordingly. W/S moves the light up and down, while A/D moves it left o
 right. To move the object, I added an OnMouseMove() method, which starts at a 
 defined position when initally moved, then the change in mouse position (delta) is 
 multiplied by the sensitivity and applied to the cube's rotation.
-
-## How to Run
-1. Open CubeRender.sln in Visual Studio
-2. Build and Run the project
-
-## Output: 
-The a 3D cube with minecraft's dirt block texture rotating around the X and Y axis

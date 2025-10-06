@@ -1,11 +1,12 @@
-﻿using System;
+﻿using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
-using OpenTK.Windowing.Desktop;
-using OpenTK.Graphics.OpenGL;
 using OpenTK.Windowing.Common;
+using OpenTK.Windowing.Desktop;
+using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CubeDemo
 {
@@ -15,54 +16,58 @@ namespace CubeDemo
         private int shaderProgramHandle;
         private int vertexArrayHandle;
         private int elementBufferHandle;
-        private int textureHandle;              // Adding texture handle for Assignment 4
+        private int textureHandle;                              // Adding texture handle for Assignment 4
 
         private int modelLoc, viewLoc, projLoc;
+        private int lightPosLoc, viewPosLoc, lightColorLoc;     // uniform locations for lighting for Assignment 5
 
-        private float rotation = 0f;
+        private Vector3 lightPos = new Vector3(2f, 2f, 2f);     // starting light position
+        private Vector2 lastMousePos;                           // last mouse position for manually rotating cube
+        private bool firstMouseMove = true;                     // flag to initialize mouse
+        private float rotationX = 0f, rotationY = 0f;           // rotation angles controlled by mouse
 
-        // Position (x,y,z) and position on texture (u, v)
+        // Position (x,y,z), position on texture (u, v) and normal (nx, ny, nz)
         // 4 corners x 6 faces of the cube
         // Basically mapping every corner of the cube to an associating corner of the texture
         private float[] vertices =
         {
-            // Position            (u, v)                                       indices
-            
+            // Position         (u, v)   normals                                       indices
+
             // Front face
-            -0.5f, -0.5f,  0.5f,    0f, 0f,     // bottom left of texture       0
-            0.5f, -0.5f,  0.5f,     1f, 0f,     // bottom right of texture      1
-            0.5f,  0.5f,  0.5f,     1f, 1f,     // top right of texture         2
-            -0.5f,  0.5f,  0.5f,    0f, 1f,     // top left of texture          3
+            -0.5f,-0.5f, 0.5f,  0f,0f,   0f,0f,1f,      // bottom left of texture       0
+             0.5f,-0.5f, 0.5f,  1f,0f,   0f,0f,1f,      // bottom right of texture      1
+             0.5f, 0.5f, 0.5f,  1f,1f,   0f,0f,1f,      // top right of texture         2
+            -0.5f, 0.5f, 0.5f,  0f,1f,   0f,0f,1f,      // top left of texture          3
 
             // Back face
-            -0.5f, -0.5f, -0.5f,    1f, 0f,     // bottom right of texture      4
-            0.5f, -0.5f, -0.5f,     0f, 0f,     // bottom left of texture       5
-            0.5f,  0.5f, -0.5f,     0f, 1f,     // top left of texture          6
-            -0.5f,  0.5f, -0.5f,    1f, 1f,     // top right of texture         7
+            -0.5f,-0.5f,-0.5f,  1f,0f,   0f,0f,-1f,     // bottom right of texture      4
+             0.5f,-0.5f,-0.5f,  0f,0f,   0f,0f,-1f,     // bottom left of texture       5
+             0.5f, 0.5f,-0.5f,  0f,1f,   0f,0f,-1f,     // top left of texture          6
+            -0.5f, 0.5f,-0.5f,  1f,1f,   0f,0f,-1f,     // top right of texture         7
 
             // Left face
-            -0.5f, -0.5f, -0.5f,    0f, 0f,     // bottom left of texture       8
-            -0.5f, -0.5f,  0.5f,    1f, 0f,     // bottom right of texture      9
-            -0.5f,  0.5f,  0.5f,    1f, 1f,     // top right of texture         10
-            -0.5f,  0.5f, -0.5f,    0f, 1f,     // top left of texture          11
+            -0.5f,-0.5f,-0.5f,  0f,0f,  -1f,0f,0f,      // bottom left of texture       8
+            -0.5f,-0.5f, 0.5f,  1f,0f,  -1f,0f,0f,      // bottom right of texture      9
+            -0.5f, 0.5f, 0.5f,  1f,1f,  -1f,0f,0f,      // top right of texture         10
+            -0.5f, 0.5f,-0.5f,  0f,1f,  -1f,0f,0f,      // top left of texture          11
 
             // Right face
-            0.5f, -0.5f, -0.5f,     1f, 0f,     // bottom right of texture      12
-            0.5f, -0.5f,  0.5f,     0f, 0f,     // bottom left of texture       13
-            0.5f,  0.5f,  0.5f,     0f, 1f,     // top left of texture          14
-            0.5f,  0.5f, -0.5f,     1f, 1f,     // top right of texture         15
+             0.5f,-0.5f,-0.5f,  1f,0f,   1f,0f,0f,      // bottom right of texture      12
+             0.5f,-0.5f, 0.5f,  0f,0f,   1f,0f,0f,      // bottom left of texture       13
+             0.5f, 0.5f, 0.5f,  0f,1f,   1f,0f,0f,      // top left of texture          14
+             0.5f, 0.5f,-0.5f,  1f,1f,   1f,0f,0f,      // top right of texture         15
 
             // Top face
-            -0.5f,  0.5f,  0.5f,    0f, 0f,     // bottom left of texture       16
-            0.5f,  0.5f,  0.5f,     1f, 0f,     // bottom right of texture      17
-            0.5f,  0.5f, -0.5f,     1f, 1f,     // top right of texture         18
-            -0.5f,  0.5f, -0.5f,    0f, 1f,     // top left of texture          19
+            -0.5f, 0.5f, 0.5f,  0f,0f,   0f,1f,0f,      // bottom left of texture       16
+             0.5f, 0.5f, 0.5f,  1f,0f,   0f,1f,0f,      // bottom right of texture      17
+             0.5f, 0.5f,-0.5f,  1f,1f,   0f,1f,0f,      // top right of texture         18
+            -0.5f, 0.5f,-0.5f,  0f,1f,   0f,1f,0f,      // top left of texture          19
 
             // Bottom face
-            -0.5f, -0.5f,  0.5f,    0f, 1f,     // top left of texture          20
-            0.5f, -0.5f,  0.5f,     1f, 1f,     // top right of texture         21
-            0.5f, -0.5f, -0.5f,     1f, 0f,     // bottom right of texture      22
-            -0.5f, -0.5f, -0.5f,    0f, 0f      // bottom left of texture       23
+            -0.5f,-0.5f, 0.5f,  0f,1f,   0f,-1f,0f,     // top left of texture          20
+             0.5f,-0.5f, 0.5f,  1f,1f,   0f,-1f,0f,     // top right of texture         21
+             0.5f,-0.5f,-0.5f,  1f,0f,   0f,-1f,0f,     // bottom right of texture      22
+            -0.5f,-0.5f,-0.5f,  0f,0f,   0f,-1f,0f      // bottom left of texture       23
         };
 
         // This tells OpenGL how to connect the above vertices
@@ -111,8 +116,11 @@ namespace CubeDemo
             #version 330 core
             layout (location = 0) in vec3 aPos;
             layout (location = 1) in vec2 aTexCoord;
+            layout(location = 2) in vec3 aNormal;
 
+            out vec3 FragPos;
             out vec2 TexCoord;
+            out vec3 Normal;
 
             uniform mat4 uModel;
             uniform mat4 uView;
@@ -120,6 +128,8 @@ namespace CubeDemo
 
             void main()
             {
+                FragPos = vec3(uModel * vec4(aPos, 1.0));
+                Normal = mat3(transpose(inverse(uModel))) * aNormal;
                 TexCoord = aTexCoord;
                 gl_Position = uProj * uView * uModel * vec4(aPos, 1.0);
             }
@@ -128,13 +138,41 @@ namespace CubeDemo
         private readonly string fragmentShaderCode = @"
             #version 330 core
             out vec4 FragColor;
+
+            in vec3 FragPos;
+            in vec3 Normal;
             in vec2 TexCoord;
 
-            uniform sampler2D ourTexture;
+            uniform vec3 lightPos;    // Position of the point light
+            uniform vec3 viewPos;     // Camera position
+            uniform vec3 lightColor;  // Color of the light
+            uniform sampler2D ourTexture; // Texture 
 
             void main()
             {
-                FragColor = texture(ourTexture, TexCoord);
+                // Ambient
+                float ambientStrength = 0.1;
+                vec3 ambient = ambientStrength * lightColor;
+
+                // Diffuse
+                vec3 norm = normalize(Normal);
+                vec3 lightDir = normalize(lightPos - FragPos);
+                float diff = max(dot(norm, lightDir), 0.0);
+                vec3 diffuse = diff * lightColor;
+
+                // Specular
+                float specularStrength = 0.5;
+                vec3 viewDir = normalize(viewPos - FragPos);
+                vec3 reflectDir = reflect(-lightDir, norm);
+                float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
+                vec3 specular = specularStrength * spec * lightColor;
+
+                // Using my texture instead of flat cube color
+                vec3 objectColor = texture(ourTexture, TexCoord).rgb;
+
+                // Combine results
+                vec3 result = (ambient + diffuse + specular) * objectColor;
+                FragColor = vec4(result, 1.0);
             }
         ";
 
@@ -164,11 +202,17 @@ namespace CubeDemo
             GL.BindBuffer(BufferTarget.ArrayBuffer, vertexBufferHandle);
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, elementBufferHandle);
 
-            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 5 * sizeof(float), 0);
+            // position
+            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 8 * sizeof(float), 0);
             GL.EnableVertexAttribArray(0);
 
-            GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, 5 * sizeof(float), 3 * sizeof(float));
+            // texture coord
+            GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, 8 * sizeof(float), 3 * sizeof(float));
             GL.EnableVertexAttribArray(1);
+
+            // normal
+            GL.VertexAttribPointer(2, 3, VertexAttribPointerType.Float, false, 8 * sizeof(float), 5 * sizeof(float));
+            GL.EnableVertexAttribArray(2);
 
             GL.BindVertexArray(0); int vertexShader = GL.CreateShader(ShaderType.VertexShader);
             GL.ShaderSource(vertexShader, vertexShaderCode);
@@ -190,6 +234,9 @@ namespace CubeDemo
             modelLoc = GL.GetUniformLocation(shaderProgramHandle, "uModel");
             viewLoc = GL.GetUniformLocation(shaderProgramHandle, "uView");
             projLoc = GL.GetUniformLocation(shaderProgramHandle, "uProj");
+            lightPosLoc = GL.GetUniformLocation(shaderProgramHandle, "lightPos");
+            viewPosLoc = GL.GetUniformLocation(shaderProgramHandle, "viewPos");
+            lightColorLoc = GL.GetUniformLocation(shaderProgramHandle, "lightColor");
 
             // Load the dirt texture
             textureHandle = LoadTexture("Assets/dirt.jpg");
@@ -203,7 +250,33 @@ namespace CubeDemo
         {
             base.OnUpdateFrame(args);
 
-            rotation += (float)args.Time;
+            if (KeyboardState.IsKeyDown(OpenTK.Windowing.GraphicsLibraryFramework.Keys.W))      // W move light up
+                lightPos.Z -= 2.0f * (float)args.Time;              
+            if (KeyboardState.IsKeyDown(OpenTK.Windowing.GraphicsLibraryFramework.Keys.S))      // S light down
+                lightPos.Z += 2.0f * (float)args.Time;
+            if (KeyboardState.IsKeyDown(OpenTK.Windowing.GraphicsLibraryFramework.Keys.A))      // A light left
+                lightPos.X -= 2.0f * (float)args.Time;
+            if (KeyboardState.IsKeyDown(OpenTK.Windowing.GraphicsLibraryFramework.Keys.D))      // D light right
+                lightPos.X += 2.0f * (float)args.Time;
+        }
+
+        protected override void OnMouseMove(MouseMoveEventArgs e)
+        {
+            base.OnMouseMove(e);
+
+            if (firstMouseMove)
+            {
+                lastMousePos = e.Position;
+                firstMouseMove = false;
+                return;
+            }
+
+            float sensitivity = 0.005f;
+            var delta = e.Position - lastMousePos;
+            lastMousePos = e.Position;
+
+            rotationY += delta.X * sensitivity; // left right, Y axis rotation
+            rotationX += delta.Y * sensitivity; // up down, X axis rotation
         }
 
         protected override void OnRenderFrame(FrameEventArgs args)
@@ -216,7 +289,7 @@ namespace CubeDemo
             GL.BindVertexArray(vertexArrayHandle);
 
             // Create transformation matrices
-            Matrix4 model = Matrix4.CreateRotationY(rotation) * Matrix4.CreateRotationX(rotation * 0.5f);
+            Matrix4 model = Matrix4.CreateRotationX(rotationX) * Matrix4.CreateRotationY(rotationY);
 
             // View matrix (camera looking at origin)
             Matrix4 view = Matrix4.LookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
@@ -233,6 +306,13 @@ namespace CubeDemo
             GL.UniformMatrix4(modelLoc, false, ref model);
             GL.UniformMatrix4(viewLoc, false, ref view);
             GL.UniformMatrix4(projLoc, false, ref projection);
+
+            Vector3 lightColor = new Vector3(1f, 1f, 1f);
+            Vector3 cameraPos = new Vector3(0f, 0f, 5f);
+
+            GL.Uniform3(lightPosLoc, ref lightPos);
+            GL.Uniform3(lightColorLoc, ref lightColor);
+            GL.Uniform3(viewPosLoc, ref cameraPos);
 
             GL.ActiveTexture(TextureUnit.Texture0);
             GL.BindTexture(TextureTarget.Texture2D, textureHandle);
