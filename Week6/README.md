@@ -25,4 +25,5 @@ Mouse movement to rotate camera.
 Scroll Wheel adjusts the field of view. (zoom-in/zoom-out)
 
 ## Output: 
-The a 3D cube with minecraft's dirt block texture rotating around the X and Y axis
+The Minecraft dirt block is now rendered in a 3D space, with a controllable 
+first-person style camera.
