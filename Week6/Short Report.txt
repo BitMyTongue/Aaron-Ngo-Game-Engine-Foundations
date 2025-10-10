@@ -1,0 +1,6 @@
+For this assignment, I implemented FPS-style camera movement for the minecraft 
+dirt block from assignment 5. The WASD keys now move the camera instead of the 
+lighting. Space moves the camera up, Left-Shift moves the camera down along the 
+Y-Axis. The scroll wheel now affects the camera field of view to allow zooming 
+in/out. This now simulates a first person perspective, as if you are moving in 
+relation to the cube position.
