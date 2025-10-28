@@ -16,3 +16,5 @@ Week 4 - Apply Texture to Cube
 Week 5 - Implement Phong Lighting in a Shader
 
 Week 6 - Implement a Controllable 3D Camera in OpenTK
+
+Midterm Project - Find Your House Keys Game
