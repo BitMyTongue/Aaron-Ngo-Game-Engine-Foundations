@@ -1,0 +1,2 @@
+# Re-include .obj model files for this project
+!Assets.obj
