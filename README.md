@@ -20,3 +20,5 @@ Week 6 - Implement a Controllable 3D Camera in OpenTK
 Midterm Project - Find Your House Keys Game
 
 Week 9 - Advanced Sprite Animation in OpenTK
+
+Week 11 - 3D Object Collision Detection in OpenTK (Midterm Game Updated)
